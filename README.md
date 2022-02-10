@@ -1,38 +1,47 @@
-[![](https://img.shields.io/badge/Methods and size-106 | 12 KB-e91e63.svg)](http://www.methodscount.com/?lib=com.pnikosis%3Amaterialish-progress%3A1.7)
+# Material-ish Progress Library
 
-# Material-ish Progress
+A material style progress wheel.
 
-A material style progress wheel compatible with 2.3
+This view uses [Progress Wheel](https://github.com/Todd-Davies/ProgressWheel) as a base, but has been almost completely rewritten (the original view uses handlers for updating the wheel).
 
-Try the demo app on Google Play:
+This implementation tries to follow as close as possible the guidelines for the circular progress.
 
-[![Get it on Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=com.pnikosis.materialishprogress.sample)
+This is how it looks in indeterminate mode (the `spinSpeed` here is 0.64 which is the default):
 
-I needed to keep a consistent (or as close as possible) look in an app across all Android Versions. The progress wheel is quite cool in Lollipop, and pretty horrible on Gingerbread.
+![spinning wheel](art/spinningwheel.gif)
 
-So I created this. This view uses [Progress Wheel](https://github.com/Todd-Davies/ProgressWheel) as a base, but has been almost completely rewritten (the original view uses handlers for updating the wheel).
+And here is in determinate mode (here the `spinSpeed` is set to 0.33):
 
-This implementation tries to follow as close as possible the guidelines for the circular progress as [described here](http://www.google.com/design/spec/components/progress-activity.html#progress-activity-types-of-indicators).
-
-This is how it looks in indeterminate mode (the spinSpeed here is 0.64 which is the default, look below how to change it):
-
-![spinning wheel](spinningwheel.gif)
-
-And in determinate mode (here the spinSpeed is set to 0.333):
-
-![spinning wheel](spinningwheel_progress.gif)
+![spinning wheel](art/spinningwheel_progress.gif)
 
 You can also have a linear determinate progress mode if you don't like the animation.
 
-## Download
+# Getting Started
 
-You can copy the ProgressWheel.java (in the library module) and the attrs.xml content into your project. Or you can get the binaries from Maven central by adding in your build.gradle dependencies:
+* You project should build against Android 4.1.x (minSdkVersion 16).
 
-```compile 'com.pnikosis:materialish-progress:1.7'```
+* Add the JitPack repository to your project's build.gradle file:
 
-## Usage
+```gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
 
-You can create your own progress wheel in xml like this (remeber to add ```xmlns:wheel="http://schemas.android.com/apk/res-auto"```):
+* Add the dependency in your app's build.gradle file:
+
+```gradle
+dependencies {
+    implementation 'com.github.moisoni97:materialish-progress:1.0.5'
+}
+```
+
+# Usage
+
+* You can create your own progress wheel in XML:
 
 ```xml
 <com.pnikosis.materialishprogress.ProgressWheel
@@ -41,42 +50,40 @@ You can create your own progress wheel in xml like this (remeber to add ```xmlns
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        wheel:matProg_barColor="#5588FF"
-        wheel:matProg_progressIndeterminate="true" />
+        app:matProg_barColor="#5588FF"
+        app:matProg_progressIndeterminate="true" />
 ```
 
-Or in code:
+* Or in code:
 
 ```Java
 ProgressWheel wheel = new ProgressWheel(context);
 wheel.setBarColor(Color.BLUE);
-...
-
 ```
 
-### Callback
+# Callback
 
-Use ```setCallback(ProgressCallback)``` to assign a callback that will be called each time the progress changes. This way you can update a value on the progress alongside with the progress animation, or execute an action once the progress reaches a certain value. in the indeterminatge wheel, the callback is called with a value of -1.0f every time the animation cycle finishes (when the wheel shrinks back to its smaller size).
+Use `setCallback(ProgressCallback)` to assign a callback that will be called each time the progress changes. This way you can update a value on the progress alongside with the progress animation, or execute an action once the progress reaches a certain value. In the indeterminate wheel, the callback is called with a value of -1.0f every time the animation cycle finishes (when the wheel shrinks back to its smaller size).
 
-### Indeterminate wheel
+# Indeterminate wheel
 
-For making the wheel indeterminate, just call the ```spin()``` method. If you set a progress value, the wheel will stop spinning.
+For making the wheel indeterminate, just call the `spin()` method. If you set a progress value, the wheel will stop spinning.
 
 You have two methods for setting the progress:
 
-```progressWheel.setProgress(float value)```
+1. `progressWheel.setProgress(float value)`
 
-Sets the value, and the wheel will smoothly animate to that value. The speed of the animation is defined by the spinSpeed (can be set with ```setSpinSpeed```, which number is the number of full turns per second)
+Sets the value, and the wheel will smoothly animate to that value. The speed of the animation is defined by the `spinSpeed` (can be set with `setSpinSpeed`, which number is the number of full turns per second)
 
-```progressWheel.setInstantProgress(float value)```
+2. `progressWheel.setInstantProgress(float value)`
 
 Sets the value, and the wheel will instantly move to that value.
 
 You can change other wheel properties such as the progress bar color, the wheel's background or the wheel's size and width.
 
-### Fill radius
+# Fill radius
 
-In case you want the spinning wheel to fill the whole layout instead of having a fixed size, you can use ```matProg_fillRadius```.
+In case you want the spinning wheel to fill the whole layout instead of having a fixed size, you can use `matProg_fillRadius`.
 
 ```xml
 <com.pnikosis.materialishprogress.ProgressWheel
@@ -85,16 +92,16 @@ In case you want the spinning wheel to fill the whole layout instead of having a
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        wheel:matProg_barColor="#5588FF"
-        wheel:matProg_progressIndeterminate="true"
-        wheel:matProg_fillRadius="true" />
+        app:matProg_barColor="#5588FF"
+        app:matProg_progressIndeterminate="true"
+        app:matProg_fillRadius="true" />
 ```
 
 This way, the wheel will be as big as the parent layout. Be warned though, if the parentlayout is not square, the wheel will become an oval since the wheel will always adapt to fill the parent view.
 
-### Other options
+# Other options
 
-In the xml definition, besides the ```fillRadius``` property, you can set:
+In the XML definition, besides the `fillRadius` property, you can set:
 
 * matProg_progressIndeterminate: boolean, if you want the wheel to spin right away.
 * matProg_barColor: color, sets the small bar's color (the spinning bar in the indeterminate wheel, or the progress bar)
@@ -106,16 +113,6 @@ In the xml definition, besides the ```fillRadius``` property, you can set:
 * matProg_circleRadius: dimension, the radius of the progress wheel, it will be ignored if you set fillRadius to true
 * matProg_fillRadius: boolean, set to true if you want the progress wheel to fill the whole layout
 * matProg_linearProgress: boolean, set to true if you want a linear animation on the determinate progress (instead of the interpolated default one).
-
-## Versions
-
-* 1.0 Initial release
-* 1.1 The default speed is closer to the default progress wheel in Lollipop. Removed unused icons.
-* 1.2 Interpolated determinate progress, a new option to set a linear progress (which was the default before)
-* 1.3 Added a prefix to the attributes to avoid collisions, new callback called when the progress changes in the determinate wheel.
-* 1.4 Improved callback, now receives a value which is rounded to two decimals
-* 1.5 Callback is called with a value of -1.0f in the indeterminate wheel every time the animation cycle finishes, updated Gradle and support libraries
-* 1.7 Animations are disabled when the system preferences have disabled animations
 
 License
 -------
