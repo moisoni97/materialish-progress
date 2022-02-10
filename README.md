@@ -8,11 +8,11 @@ This implementation tries to follow as close as possible the guidelines for the 
 
 This is how it looks in indeterminate mode (the `spinSpeed` here is 0.64 which is the default):
 
-![spinning wheel](art/spinningwheel.gif)
+![spinning wheel](art/spinning_wheel.gif)
 
 And here is in determinate mode (here the `spinSpeed` is set to 0.33):
 
-![spinning wheel](art/spinningwheel_progress.gif)
+![spinning wheel](art/spinning_wheel_progress.gif)
 
 You can also have a linear determinate progress mode if you don't like the animation.
 
